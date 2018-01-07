@@ -8,7 +8,7 @@ export default (directoryPath) => {
     return {};
   }
 
-  const indexPath = path.resolve(directoryPath, 'index.js');
+  const indexPath = path.resolve(directoryPath, 'index.ts');
   const indexContents = fs.readFileSync(indexPath, 'utf-8');
   const found = indexContents.match(CREATE_INDEX_PATTERN);
   const configLine = typeof found[1] === 'string' ? found[1].trim() : '';

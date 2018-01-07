@@ -27,7 +27,7 @@ export default (directoryPaths, options = {}) => {
   if (options.updateIndex || options.recursive) {
     sortedDirectoryPaths = _.map(sortedDirectoryPaths, (dir) => {
       return findIndexFiles(dir, {
-        fileName: options.updateIndex ? 'index.js' : '*',
+        fileName: options.updateIndex ? 'index.ts' : '*',
         silent: options.updateIndex || options.ignoreUnsafe
       });
     });
@@ -58,7 +58,7 @@ export default (directoryPaths, options = {}) => {
       config
     });
 
-    const indexFilePath = path.resolve(directoryPath, 'index.js');
+    const indexFilePath = path.resolve(directoryPath, 'index.ts');
 
     try {
       existingIndexCode = fs.readFileSync(indexFilePath, 'utf8');

@@ -11,7 +11,7 @@ const argv = yargs
     recursive: {
       alias: 'r',
       default: false,
-      description: 'Create/update index files recursively. Halts on any unsafe "index.js" files.',
+      description: 'Create/update index files recursively. Halts on any unsafe "index.ts" files.',
       type: 'boolean'
     }
   })
@@ -19,7 +19,7 @@ const argv = yargs
     ignoreUnsafe: {
       alias: 'i',
       default: false,
-      description: 'Ignores unsafe "index.js" files instead of halting.',
+      description: 'Ignores unsafe "index.ts" files instead of halting.',
       type: 'boolean'
     }
   })

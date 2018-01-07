@@ -1,23 +1,24 @@
-import _ from 'lodash';
+import _ from "lodash";
 
-const safeVariableName = (fileName) => {
-  const indexOfDot = fileName.indexOf('.');
+const fileOrFolderName = (fileName) => {
+  const isFile = (_.includes(fileName, ".ts"));
 
-  if (indexOfDot === -1) {
-    return fileName;
+  if (!isFile) {
+    return `${fileName}/index`;
   } else {
+    const indexOfDot = fileName.indexOf(".");
     return fileName.slice(0, indexOfDot);
   }
 };
 
-const buildExportBlock = (files) => {
+const buildImportBlock = (files) => {
   let importBlock;
 
   importBlock = _.map(files, (fileName) => {
-    return 'export { default as ' + safeVariableName(fileName) + ' } from \'./' + fileName + '\';';
+    return `import "./${fileOrFolderName(fileName)}";`;
   });
 
-  importBlock = importBlock.join('\n');
+  importBlock = importBlock.join("\n");
 
   return importBlock;
 };
@@ -26,29 +27,29 @@ export default (filePaths, options = {}) => {
   let code;
   let configCode;
 
-  code = '';
-  configCode = '';
+  code = "";
+  configCode = "";
 
   if (options.banner) {
     const banners = _.isArray(options.banner) ? options.banner : [options.banner];
 
     banners.forEach((banner) => {
-      code += banner + '\n';
+      code += banner + "\n";
     });
 
-    code += '\n';
+    code += "\n";
   }
 
   if (options.config && _.size(options.config) > 0) {
-    configCode += ' ' + JSON.stringify(options.config);
+    configCode += " " + JSON.stringify(options.config);
   }
 
-  code += '// @create-index' + configCode + '\n\n';
+  code += "// @create-index" + configCode + "\n\n";
 
   if (filePaths.length) {
     const sortedFilePaths = filePaths.sort();
 
-    code += buildExportBlock(sortedFilePaths) + '\n\n';
+    code += buildImportBlock(sortedFilePaths) + "\n\n";
   }
 
   return code;

@@ -101,7 +101,7 @@ export default (directoryPath, options = {}) => {
       return false;
     }
 
-    if (_.startsWith(fileName, 'index.js')) {
+    if (_.startsWith(fileName, 'index.ts')) {
       return false;
     }
 
